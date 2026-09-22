@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "futebol-dashboard",
+      "runtimeExecutable": ".venv/Scripts/streamlit.exe",
+      "runtimeArgs": ["run", "app/app.py", "--server.port", "8532", "--server.headless", "true"],
+      "port": 8532
+    }
+  ]
+}
