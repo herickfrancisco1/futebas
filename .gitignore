@@ -9,3 +9,4 @@ Data/Processed/*
 !Data/Processed/.gitkeep
 
 .DS_Store
+,versions/
