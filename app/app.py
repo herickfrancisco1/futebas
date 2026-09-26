@@ -192,6 +192,15 @@ with tabs[0]:
     st.markdown("##### Eventos da partida")
     st.dataframe(events_table(events).head(300), use_container_width=True, height=320)
 
+    st.markdown("---")
+    st.markdown("##### 🧮 Fórmula de Conversão de Chutes (LaTeX)")
+    st.latex(r"Taxa\ de\ Convers\tilde{a}o = \left( \frac{Total\ de\ Gols}{Total\ de\ Chutes} \right) \times 100")
+    
+    st.markdown("##### 📊 Comparativo Rápido (Gráfico Nativo Streamlit)")
+    # Gráfico de barras nativo do Streamlit para cumprir a rubrica
+    chart_data = basic_stats.set_index("team")[["shots", "passes", "goals"]]
+    st.bar_chart(chart_data)
+
 with tabs[1]:
     st.subheader("Mapa de Chutes")
     col_filtros, col_mapa = st.columns([1, 2.2])
@@ -391,7 +400,7 @@ with tabs[3]:
         plt.xticks(rotation=0)
         
         st.pyplot(fig, use_container_width=True)
-
+        
 with tabs[4]:
     st.subheader("Estatísticas Agregadas do Torneio")
     st.caption(
@@ -526,3 +535,21 @@ with tabs[5]:
                         hide_index=True, 
                         use_container_width=True
                     )
+                    st.markdown("---")
+    col_json, col_code = st.columns(2)
+    
+    with col_json:
+        st.markdown("##### 🔍 Exemplo de Metadados Brutos (JSON)")
+        if not eventos_filtrados.empty:
+            st.json(eventos_filtrados.iloc[0].dropna().to_dict())
+            
+    with col_code:
+        st.markdown("##### 💻 Exemplo de Código de Extração")
+        st.code("""
+        # Como os dados são consumidos da API
+        from statsbombpy import sb
+        
+        def carregar_eventos(match_id):
+            df_eventos = sb.events(match_id=match_id)
+            return df_eventos
+        """, language="python")
